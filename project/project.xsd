@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://mss.stu.red/project"
+           xmlns="http://mss.stu.red/project"
+           elementFormDefault="qualified">
+    
+    <!-- 根元素: project -->
+    <xs:element name="project" type="projectType"/>
+    
+    <!-- project类型定义 -->
+    <xs:complexType name="projectType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>项目名称</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="description" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>项目描述</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="groupId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>项目组织ID</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="artifactId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>项目构件ID</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="version" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>项目版本号</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="packaging" type="packagingType">
+                <xs:annotation>
+                    <xs:documentation>打包类型</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="extensions" type="extensionsType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>扩展依赖列表</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dependencies" type="dependenciesType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>项目依赖列表</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- packaging类型: 枚举值限制 -->
+    <xs:simpleType name="packagingType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="lib"/>
+            <xs:enumeration value="output"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- extensions类型定义 -->
+    <xs:complexType name="extensionsType">
+        <xs:sequence>
+            <xs:element name="extension" type="dependencyType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- dependencies类型定义 -->
+    <xs:complexType name="dependenciesType">
+        <xs:sequence>
+            <xs:element name="dependency" type="dependencyType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- 依赖项/扩展项的通用类型 -->
+    <xs:complexType name="dependencyType">
+        <xs:sequence>
+            <xs:element name="groupId" type="xs:string"/>
+            <xs:element name="artifactId" type="xs:string"/>
+            <xs:element name="version" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
